@@ -33,7 +33,7 @@ ls -l ~/.ssh/
 ![image](https://github.com/ugurcomptech/SSH-Server/assets/133202238/243e4a75-8249-4a6c-922b-cb2da776d4d6)
 
 
-Tab tuşuna basınca iki dosyası da görebiliyoruz. `.pub` ile biten public  diğeri de private olandır. Uzağa gidebilmek için `id_rsa.pub` dosyasını kullanacağız. `id_rsa.pub` kullanabilmek için `id_rsa`'yı kullanacağız.
+Tab tuşuna basınca iki dosyayı da görebiliyoruz. `.pub` ile biten public  diğeri de private olandır. Uzağa gidebilmek için `id_rsa.pub` dosyasını kullanacağız. `id_rsa.pub` kullanabilmek için `id_rsa`'yı kullanacağız.
 
 `id_rsa.pub` dosyamızı açıyoruz.
 
@@ -81,6 +81,24 @@ Gördüğünüz gibi şifre vs. istemedi.
 Tabi bu güvenli olmayan bir yöntem saldırganlar için bazı açıklar vermiş oluyoruz. Bu açıkları kapatmak için daha güvenli hale getireceğiz.
 
 ## Güvenlik Güçlendirmesi
+
+Salgırdanlar bu keyleri ararken default dosya yollarına bakarlar eğer bulamazlarsa `id_rsa` gibi aratmalar yaparak keyleri bulmaya çalışırlar. Biz bunun önüne geçmek için bazı güvenlik önlemleri alacağız.
+
+İlk önce bir tane klasör oluşturacağız. `mkdir ~/.keys` yazarak gizli bir klasör oluşturuyoruz. Ben örnek olsun diye böyle basit bir isim verdim siz istediğinizi verebilirsiniz. Şimdi ssh-key oluşturalım. Önceden `ssh-keygen -t rsa -b 4096` yazıyorduk fakat bu sefer rsa şifreleme yöntemini kullanmayacağız. 
+
+Tab tuşuna bastığımızda diğer şifreleme yöntemlerini görebiliyoruz. Biz burada en moderni olan `ed25519` olanı kullanacağız. ed25519, RSA kadar uyumlu değildir. Gideceğimiz serverın bunu desteklemesi gerekmektedir. OpenSSH version 6 dan sonrasıdır. SSH serverımıza gidip `ssh -V` yazarak sürümünüzü görebilirsiniz.
+
+![image](https://github.com/ugurcomptech/SSH-Server/assets/133202238/241513ba-d071-42ab-9f04-78d5d13e6a6f)
+
+
+Keyimizi oluşturalım. Bizi varsayılan dizinin altına götürmeye çalışıyor. Biz buranın yerini değiştireceğiz. `/home/master/.keys/key` olarak belirtiyoruz.
+
+![image](https://github.com/ugurcomptech/SSH-Server/assets/133202238/0420e8c1-f2d5-4be5-88de-21da51f3a3d5)
+
+
+Dosya yolunu belirttikten sonra bizden bir parola istiyor. Private keyin hangi parolayla korunacağını soruyor. Burada unutulmaması gereken şey bu parolayı servera her bağlandığınızda girmeniz gerektiğidir. O yüzden fazla uzun şifre koymamanız önerilir.
+
+![image](https://github.com/ugurcomptech/SSH-Server/assets/133202238/58e38d2c-1b70-4e75-a047-4c71290693b3)
 
 
 
