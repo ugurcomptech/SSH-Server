@@ -86,12 +86,12 @@ Salgırdanlar bu keyleri ararken default dosya yollarına bakarlar eğer bulamaz
 
 İlk önce bir tane klasör oluşturacağız. `mkdir ~/.keys` yazarak gizli bir klasör oluşturuyoruz. Ben örnek olsun diye böyle basit bir isim verdim siz istediğinizi verebilirsiniz. Şimdi ssh-key oluşturalım. Önceden `ssh-keygen -t rsa -b 4096` yazıyorduk fakat bu sefer rsa şifreleme yöntemini kullanmayacağız. 
 
-Tab tuşuna bastığımızda diğer şifreleme yöntemlerini görebiliyoruz. Biz burada en moderni olan `ed25519` olanı kullanacağız. ed25519, RSA kadar uyumlu değildir. Gideceğimiz serverın bunu desteklemesi gerekmektedir. OpenSSH version 6 dan sonrasıdır. SSH serverımıza gidip `ssh -V` yazarak sürümünüzü görebilirsiniz.
+Tab tuşuna bastığımızda diğer şifreleme yöntemlerini görebiliyoruz. Biz burada en modern olan `ed25519` olanı kullanacağız. ed25519, RSA kadar uyumlu değildir. Gideceğimiz serverın bunu desteklemesi gerekmektedir. OpenSSH version 6 dan sonrasıdır. SSH serverımıza gidip `ssh -V` yazarak sürümünüzü görebilirsiniz.
 
 ![image](https://github.com/ugurcomptech/SSH-Server/assets/133202238/241513ba-d071-42ab-9f04-78d5d13e6a6f)
 
 
-Keyimizi oluşturalım. Bizi varsayılan dizinin altına götürmeye çalışıyor. Biz buranın yerini değiştireceğiz. `/home/master/.keys/key` olarak belirtiyoruz.
+Keyimizi oluşturalım. Bizi varsayılan dizinin altına götürmeye çalışıyor. Biz buranın yerini değiştirip `/home/master/.keys/key` olarak belirtiyoruz.
 
 ![image](https://github.com/ugurcomptech/SSH-Server/assets/133202238/0420e8c1-f2d5-4be5-88de-21da51f3a3d5)
 
@@ -103,9 +103,44 @@ Dosya yolunu belirttikten sonra bizden bir parola istiyor. Private keyin hangi p
 
 
 
+![image](https://github.com/ugurcomptech/SSH-Server/assets/133202238/9827a649-ee55-400b-ab63-368c5768c332)
+
+Başarılı şekilde oluşturduk.
 
 
+Şimdi ssh-copy-id yapmaya çalışalım.
+
+![image](https://github.com/ugurcomptech/SSH-Server/assets/133202238/802bc7e7-6aca-4575-a0f4-1755ad2afff8)
+
+Hata aldık. Bunun sebebi varsayılan dizinin altında aramasıdır. `-i` parametresi ile bunu tanımlayacağız.
 
 
+```
+ssh-copy-id -i ~/.keys/key.pub root@172.16.1.5
+```
+
+![image](https://github.com/ugurcomptech/SSH-Server/assets/133202238/dccbb90c-c489-4a5c-915f-aa90cc3384ad)
+
+
+Başarılı bir şekilde keyi ekledik.
+
+SSH serverımızda gelip kontrol ediyoruz.
+
+![image](https://github.com/ugurcomptech/SSH-Server/assets/133202238/9b655ad5-fe57-4d1e-9830-6058284904ab)
+
+**Not:** authorized_keys dosyasına elle de ilgili keyleri girebilirsiniz. Saldırganlar da gelip ssh-keygeni çalıştırıp keyi buraya yazabilir. Bu yüzden dosyanın yazılabilir olmaması gerekir. Root ele geçirilirse çalıştırabilir mi derseniz sormaya bile gerek yok root ele geçirildiyse o sistem artık sizin değildir.
+
+![image](https://github.com/ugurcomptech/SSH-Server/assets/133202238/cb325552-8af1-43da-972c-90089c428831)
+
+
+SSH serverımıza bağlanalım.
+
+![image](https://github.com/ugurcomptech/SSH-Server/assets/133202238/cb2f37ac-3306-4284-b523-8ca63b4fc324)
+
+Fark ettiyseniz hala şifre istiyor bunun sebebi varsayılan dizinin altında aramasıdır. Bağlantı yaparken private anahtarı da kullanmamız gerekmektedir.
+
+![image](https://github.com/ugurcomptech/SSH-Server/assets/133202238/b60f8231-0231-4ebc-9059-41ef5ec88802)
+
+Sarı ile çizdiğim yerde ssh-keyi oluştururken belirlediğimiz parolayı istiyor. Parolayı girdikten sonra başarılı bir şekilde bağlantı kurabilirdik.
 
 
