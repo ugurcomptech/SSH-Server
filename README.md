@@ -143,4 +143,62 @@ Fark ettiyseniz hala şifre istiyor bunun sebebi varsayılan dizinin altında ar
 
 Sarı ile çizdiğim yerde ssh-keyi oluştururken belirlediğimiz parolayı istiyor. Parolayı girdikten sonra başarılı bir şekilde bağlantı kurabilirdik.
 
+## Parolalı Erişimi Kapatma
+
+
+İlk öncelikle ssh config dosyamızı inceleyelim. `nano /etc/ssh/sshd_config` yazarak ilgili dosyayı açalım.
+
+
+![image](https://github.com/ugurcomptech/SSH-Server/assets/133202238/fc4da906-e303-49c0-82d7-4f059b7f4bae)
+
+Altı çizili olan dosya yolunun Include edildiğini görüyoruz. .conf uzantılı her dosyayı işle denmiş burada.
+
+
+![image](https://github.com/ugurcomptech/SSH-Server/assets/133202238/cc697fb9-b3df-4303-8bb4-8f5bda35ac2a)
+
+Dosyamızı açtıktan sonra buradan root login de ssh bağlantısına parola ile erişim sağlanması yetkisi verilmiş. Sunucuyu kurarken SSH ile root bağlantısı izin ver gibi bir seçenek görebilirsiniz.
+
+Biz de bu işlem için kendi .conf dosyamızı oluşturacağız.
+
+
+`02-passowrdauth.conf` adın da bir dosya oluşturup içerisine aşağıdaki tanımı yapıyoruz.
+
+![image](https://github.com/ugurcomptech/SSH-Server/assets/133202238/9847b8fc-3d91-4b64-b23f-ada15cf9663e)
+
+İlgili tanımı yaptıktan sonra ssh servisimizi restart ediyoruz.
+
+
+![image](https://github.com/ugurcomptech/SSH-Server/assets/133202238/01944690-17a6-4d7b-adf9-efd76ee77649)
+
+Yetki hatası aldık. İlgili işlem başarılı şekilde yapılmıştır.
+
+![image](https://github.com/ugurcomptech/SSH-Server/assets/133202238/62a14cab-a2fc-4f64-8162-53c58fecb76c)
+
+
+Doğru tanımı yaparak serverımıza giriş yapabildik.
+
+
+
+## Dosya Transferi
+
+![image](https://github.com/ugurcomptech/SSH-Server/assets/133202238/a39e3607-87cb-42ed-8f25-f2d40d7a2a29)
+
+Kırmızı ile altı çizili olan kısım da keyimizi tanıtıyoruz.
+
+Sarı ile altı çizili olan kısım da transfer edeceğimiz dosyanın yolunu yazıyoruz.
+
+Turuncu ile altı çizili olan kısım da ssh serverımızın bilgileri ve hangi klasöre transfer edineceğini belirtiyoruz.
+
+![image](https://github.com/ugurcomptech/SSH-Server/assets/133202238/c2b6a65f-4902-4d3f-881a-abfaf8c7176e)
+
+Dosyamızın transfer edildiğini gördük. Şimdi SSH serverımızda kontrol sağlayalım.
+
+![image](https://github.com/ugurcomptech/SSH-Server/assets/133202238/251f4bde-3ee1-4628-9d41-4051a3f613e4)
+
+merhaba.txt dosyası başarılı şekilde transfer edilmiştir.
+
+
+
+
+
 
